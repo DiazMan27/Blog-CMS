@@ -1,27 +1,45 @@
 <?php
-// Incluye el archivo de autenticación que contiene funciones de sesión y seguridad
 require_once '../includes/auth.php';
 
-// Verifica si la solicitud es de tipo POST (envío del formulario)
+function createUniqueSlug($title, $pdo) {
+    $slug = strtolower(trim($title));
+    $slug = preg_replace('/[^a-z0-9-]/', '-', $slug);
+    $slug = preg_replace('/-+/', '-', $slug);
+    
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM posts WHERE slug = ?");
+    $originalSlug = $slug;
+    $counter = 1;
+    
+    while (true) {
+        $stmt->execute([$slug]);
+        if ($stmt->fetchColumn() == 0) {
+            return $slug;
+        }
+        $slug = $originalSlug . '-' . $counter;
+        $counter++;
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Obtiene y limpia los datos del formulario usando el operador null coalescing (??) como fallback
     $title = trim($_POST['title'] ?? '');
     $content = trim($_POST['content'] ?? '');
     
-    // Validación: verifica que los campos no estén vacíos
     if (empty($title) || empty($content)) {
-        $error = 'Todos los campos son requeridos';  // Mensaje de error para mostrar al usuario
+        $error = 'Todos los campos son requeridos';
     } else {
-        // Prepara y ejecuta una consulta SQL segura con parámetros para evitar inyecciones SQL
-        $stmt = $pdo->prepare("INSERT INTO posts (title, content, user_id) VALUES (?, ?, ?)");
-        $stmt->execute([$title, $content, $current_user['id']]);  // Asocia el post al usuario actual
-        
-        // Redirige a la página principal con parámetro de éxito
-        redirect('/blog-cms/?success=created');
+        try {
+            $slug = createUniqueSlug($title, $pdo);
+            
+            $stmt = $pdo->prepare("INSERT INTO posts (title, content, user_id, slug) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$title, $content, $current_user['id'], $slug]);
+            
+            redirect('/blog-cms/?success=created');
+        } catch (PDOException $e) {
+            $error = 'Error al crear el post: ' . $e->getMessage();
+        }
     }
 }
 ?>
-
 <!-- Incluye el encabezado común del sitio -->
 <?php include '../includes/header.php'; ?>
 
