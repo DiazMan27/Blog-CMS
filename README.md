@@ -28,3 +28,5 @@ Backend: PHP (sin frameworks)
 Base de datos: MySQL (PhpMyAdmin)
 Servidor local: XAMPP
 
+Pantalla principal login: 
+![login](https://github.com/user-attachments/assets/9c828a5a-ae4d-42fa-8073-b3cb5ceb896d)
