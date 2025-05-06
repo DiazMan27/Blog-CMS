@@ -13,19 +13,17 @@ Dos roles de usuarios:
 
 CRUD de publicaciones:
 
-Crear post
-
-Leer post
-
-Editar post
-
-Eliminar post (solo admins o dueños del post)
+1. Crear post
+2. Leer post
+3. Editar post
+4. Eliminar post
 
 Interfaz sencilla y responsiva.
 
-Panel de administración.
+Panel de administración donde se ven los usuario (solo admin lo ve)
 
 🛠️ Tecnologías utilizadas
+
 Frontend: HTML5, CSS3
 
 Backend: PHP (sin frameworks)
