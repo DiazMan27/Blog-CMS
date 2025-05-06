@@ -1,4 +1,5 @@
 📝 Blog CMS
+
 Un pequeño sistema de gestión de contenidos (CMS) tipo blog, desarrollado con HTML, CSS, PHP y MySQL (PhpMyAdmin). Este proyecto permite gestionar publicaciones con distintos roles de usuario.
 
 🚀 Características
