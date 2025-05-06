@@ -19,15 +19,12 @@ CRUD de publicaciones:
 4. Eliminar post
 
 Interfaz sencilla y responsiva.
-
 Panel de administración donde se ven los usuario (solo admin lo ve)
 
 🛠️ Tecnologías utilizadas
 
-Frontend: HTML5, CSS3
-
+Frontend: HTML5, CSS3 (minimizado)
 Backend: PHP (sin frameworks)
-
 Base de datos: MySQL (PhpMyAdmin)
-
 Servidor local: XAMPP
+
